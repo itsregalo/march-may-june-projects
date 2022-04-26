@@ -1,0 +1,1183 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20214.22.0108.1039                               -->
+<workbook original-version='18.1' source-build='2021.4.3 (20214.22.0108.1039)' source-platform='mac' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
+    <_.fcp.MarkAnimation.true...MarkAnimation />
+    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy />
+    <_.fcp.ObjectModelExtractV2.true...ObjectModelExtractV2 />
+    <_.fcp.ObjectModelTableType.true...ObjectModelTableType />
+    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <_.fcp.AnimationOnByDefault.false...style>
+    <_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule element='animation'>
+      <_.fcp.AnimationOnByDefault.false...format attr='animation-on' value='ao-on' />
+    </_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule>
+  </_.fcp.AnimationOnByDefault.false...style>
+  <datasources>
+    <datasource caption='Sales Inventory+ (Multiple Connections)' inline='true' name='federated.0uyr1cv09bsyrm15ny7c718jd5zt' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='Price_marketing' name='excel-direct.0iabptp1caa6hq1ctkn0v1q45qdn'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='Data/Assignment 02/Price_marketing.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
+          <named-connection caption='Profit_Sales' name='excel-direct.119olx303f42ka1egjexc1bo6tmb'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='Data/Assignment 02/Profit_Sales.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
+          <named-connection caption='Sales_Inventory' name='excel-direct.1qfv3hd1hdh21y1ewozrf0ri0n96'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='Data/Assignment 02/Sales_Inventory.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
+        </named-connections>
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation join='full' type='join'>
+          <clause type='join'>
+            <expression op='AND'>
+              <expression op='='>
+                <expression op='[Sales Inventory].[WERKS]' />
+                <expression op='[Profit Sales].[BUKRS]' />
+              </expression>
+              <expression op='='>
+                <expression op='[Sales Inventory].[VIRTTIME]' />
+                <expression op='[Profit Sales].[VIRTTIME]' />
+              </expression>
+            </expression>
+          </clause>
+          <relation join='full' type='join'>
+            <clause type='join'>
+              <expression op='AND'>
+                <expression op='='>
+                  <expression op='[Sales Inventory].[WERKS]' />
+                  <expression op='[Price Marketing].[VKORG]' />
+                </expression>
+                <expression op='='>
+                  <expression op='[Sales Inventory].[VIRTTIME]' />
+                  <expression op='[Price Marketing].[VIRTTIME]' />
+                </expression>
+              </expression>
+            </clause>
+            <relation connection='excel-direct.1qfv3hd1hdh21y1ewozrf0ri0n96' name='Sales Inventory' table='[Sheet1$]' type='table'>
+              <columns gridOrigin='A1:H1801:no:A1:H1801:0' header='yes' outcome='2'>
+                <column datatype='string' name='MANDT' ordinal='0' />
+                <column datatype='string' name='WERKS' ordinal='1' />
+                <column datatype='string' name='MATNR' ordinal='2' />
+                <column datatype='string' name='MAKTX' ordinal='3' />
+                <column datatype='integer' name='INVENTORY' ordinal='4' />
+                <column datatype='integer' name='SALES' ordinal='5' />
+                <column datatype='string' name='CURRENCY' ordinal='6' />
+                <column datatype='string' name='VIRTTIME' ordinal='7' />
+              </columns>
+            </relation>
+            <relation connection='excel-direct.0iabptp1caa6hq1ctkn0v1q45qdn' name='Price Marketing' table='[Sheet1$]' type='table'>
+              <columns gridOrigin='A1:H5491:no:A1:H5491:0' header='yes' outcome='2'>
+                <column datatype='string' name='MANDT' ordinal='0' />
+                <column datatype='string' name='VKORG' ordinal='1' />
+                <column datatype='string' name='MATNR' ordinal='2' />
+                <column datatype='string' name='AREA' ordinal='3' />
+                <column datatype='real' name='DC18PRICE' ordinal='4' />
+                <column datatype='integer' name='MARKETING' ordinal='5' />
+                <column datatype='string' name='CURRENCY' ordinal='6' />
+                <column datatype='string' name='VIRTTIME' ordinal='7' />
+              </columns>
+            </relation>
+          </relation>
+          <relation connection='excel-direct.119olx303f42ka1egjexc1bo6tmb' name='Profit Sales' table='[Sheet1$]' type='table'>
+            <columns gridOrigin='A1:F301:no:A1:F301:0' header='yes' outcome='2'>
+              <column datatype='string' name='MANDT' ordinal='0' />
+              <column datatype='string' name='BUKRS' ordinal='1' />
+              <column datatype='string' name='CURRENCY' ordinal='2' />
+              <column datatype='real' name='GLPROFIT' ordinal='3' />
+              <column datatype='real' name='SALES' ordinal='4' />
+              <column datatype='string' name='VIRTTIME' ordinal='5' />
+            </columns>
+          </relation>
+        </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation join='full' type='join'>
+          <clause type='join'>
+            <expression op='AND'>
+              <expression op='='>
+                <expression op='[Sales Inventory].[WERKS]' />
+                <expression op='[Profit Sales].[BUKRS]' />
+              </expression>
+              <expression op='='>
+                <expression op='[Sales Inventory].[VIRTTIME]' />
+                <expression op='[Profit Sales].[VIRTTIME]' />
+              </expression>
+            </expression>
+          </clause>
+          <relation join='full' type='join'>
+            <clause type='join'>
+              <expression op='AND'>
+                <expression op='='>
+                  <expression op='[Sales Inventory].[WERKS]' />
+                  <expression op='[Price Marketing].[VKORG]' />
+                </expression>
+                <expression op='='>
+                  <expression op='[Sales Inventory].[VIRTTIME]' />
+                  <expression op='[Price Marketing].[VIRTTIME]' />
+                </expression>
+              </expression>
+            </clause>
+            <relation connection='excel-direct.1qfv3hd1hdh21y1ewozrf0ri0n96' name='Sales Inventory' table='[Sheet1$]' type='table'>
+              <columns gridOrigin='A1:H1801:no:A1:H1801:0' header='yes' outcome='2'>
+                <column datatype='string' name='MANDT' ordinal='0' />
+                <column datatype='string' name='WERKS' ordinal='1' />
+                <column datatype='string' name='MATNR' ordinal='2' />
+                <column datatype='string' name='MAKTX' ordinal='3' />
+                <column datatype='integer' name='INVENTORY' ordinal='4' />
+                <column datatype='integer' name='SALES' ordinal='5' />
+                <column datatype='string' name='CURRENCY' ordinal='6' />
+                <column datatype='string' name='VIRTTIME' ordinal='7' />
+              </columns>
+            </relation>
+            <relation connection='excel-direct.0iabptp1caa6hq1ctkn0v1q45qdn' name='Price Marketing' table='[Sheet1$]' type='table'>
+              <columns gridOrigin='A1:H5491:no:A1:H5491:0' header='yes' outcome='2'>
+                <column datatype='string' name='MANDT' ordinal='0' />
+                <column datatype='string' name='VKORG' ordinal='1' />
+                <column datatype='string' name='MATNR' ordinal='2' />
+                <column datatype='string' name='AREA' ordinal='3' />
+                <column datatype='real' name='DC18PRICE' ordinal='4' />
+                <column datatype='integer' name='MARKETING' ordinal='5' />
+                <column datatype='string' name='CURRENCY' ordinal='6' />
+                <column datatype='string' name='VIRTTIME' ordinal='7' />
+              </columns>
+            </relation>
+          </relation>
+          <relation connection='excel-direct.119olx303f42ka1egjexc1bo6tmb' name='Profit Sales' table='[Sheet1$]' type='table'>
+            <columns gridOrigin='A1:F301:no:A1:F301:0' header='yes' outcome='2'>
+              <column datatype='string' name='MANDT' ordinal='0' />
+              <column datatype='string' name='BUKRS' ordinal='1' />
+              <column datatype='string' name='CURRENCY' ordinal='2' />
+              <column datatype='real' name='GLPROFIT' ordinal='3' />
+              <column datatype='real' name='SALES' ordinal='4' />
+              <column datatype='string' name='VIRTTIME' ordinal='5' />
+            </columns>
+          </relation>
+        </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
+        <cols>
+          <map key='[AREA]' value='[Price Marketing].[AREA]' />
+          <map key='[BUKRS]' value='[Profit Sales].[BUKRS]' />
+          <map key='[CURRENCY (Sheet11)]' value='[Price Marketing].[CURRENCY]' />
+          <map key='[CURRENCY (Sheet12)]' value='[Profit Sales].[CURRENCY]' />
+          <map key='[CURRENCY]' value='[Sales Inventory].[CURRENCY]' />
+          <map key='[DC18PRICE]' value='[Price Marketing].[DC18PRICE]' />
+          <map key='[GLPROFIT]' value='[Profit Sales].[GLPROFIT]' />
+          <map key='[INVENTORY]' value='[Sales Inventory].[INVENTORY]' />
+          <map key='[MAKTX]' value='[Sales Inventory].[MAKTX]' />
+          <map key='[MANDT (Sheet11)]' value='[Price Marketing].[MANDT]' />
+          <map key='[MANDT (Sheet12)]' value='[Profit Sales].[MANDT]' />
+          <map key='[MANDT]' value='[Sales Inventory].[MANDT]' />
+          <map key='[MARKETING]' value='[Price Marketing].[MARKETING]' />
+          <map key='[MATNR (Sheet11)]' value='[Price Marketing].[MATNR]' />
+          <map key='[MATNR]' value='[Sales Inventory].[MATNR]' />
+          <map key='[SALES (Sheet12)]' value='[Profit Sales].[SALES]' />
+          <map key='[SALES]' value='[Sales Inventory].[SALES]' />
+          <map key='[VIRTTIME (Sheet11)]' value='[Price Marketing].[VIRTTIME]' />
+          <map key='[VIRTTIME (Sheet12)]' value='[Profit Sales].[VIRTTIME]' />
+          <map key='[VIRTTIME]' value='[Sales Inventory].[VIRTTIME]' />
+          <map key='[VKORG]' value='[Price Marketing].[VKORG]' />
+          <map key='[WERKS]' value='[Sales Inventory].[WERKS]' />
+        </cols>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>0</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:H1801:no:A1:H1801:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>2</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>0</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:H5491:no:A1:H5491:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>2</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>0</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:F301:no:A1:F301:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>2</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MANDT</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[MANDT]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>MANDT</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>WERKS</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[WERKS]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>WERKS</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MATNR</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[MATNR]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>MATNR</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MAKTX</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[MAKTX]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>MAKTX</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>INVENTORY</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[INVENTORY]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>INVENTORY</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SALES</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[SALES]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>SALES</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CURRENCY</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[CURRENCY]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>CURRENCY</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>VIRTTIME</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[VIRTTIME]</local-name>
+            <parent-name>[Sales Inventory]</parent-name>
+            <remote-alias>VIRTTIME</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MANDT</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[MANDT (Sheet11)]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>MANDT</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>VKORG</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[VKORG]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>VKORG</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MATNR</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[MATNR (Sheet11)]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>MATNR</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>AREA</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[AREA]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>AREA</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>DC18PRICE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[DC18PRICE]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>DC18PRICE</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MARKETING</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[MARKETING]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>MARKETING</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CURRENCY</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[CURRENCY (Sheet11)]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>CURRENCY</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>VIRTTIME</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[VIRTTIME (Sheet11)]</local-name>
+            <parent-name>[Price Marketing]</parent-name>
+            <remote-alias>VIRTTIME</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>MANDT</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[MANDT (Sheet12)]</local-name>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias>MANDT</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>BUKRS</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[BUKRS]</local-name>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias>BUKRS</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CURRENCY</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[CURRENCY (Sheet12)]</local-name>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias>CURRENCY</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>GLPROFIT</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[GLPROFIT]</local-name>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias>GLPROFIT</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SALES</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[SALES (Sheet12)]</local-name>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias>SALES</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>VIRTTIME</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[VIRTTIME (Sheet12)]</local-name>
+            <parent-name>[Profit Sales]</parent-name>
+            <remote-alias>VIRTTIME</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RUS_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Location(Price Marketing)' datatype='string' name='[AREA]' role='dimension' type='nominal' />
+      <column caption='Teams ID(Profit Sales)' datatype='string' name='[BUKRS]' role='dimension' type='nominal' />
+      <column caption='Currency type(Price Marketing)' datatype='string' name='[CURRENCY (Sheet11)]' role='dimension' type='nominal' />
+      <column caption='Currency type(Profit Sales)' datatype='string' name='[CURRENCY (Sheet12)]' role='dimension' type='nominal' />
+      <column caption='Currency type(Sales Inventory)' datatype='string' name='[CURRENCY]' role='dimension' type='nominal' />
+      <column caption='Revised Profit' datatype='real' name='[Calculation_3566569452333752320]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='[GLPROFIT]*(-1)' />
+      </column>
+      <column caption='Gross Sales' datatype='real' name='[Calculation_3566569452334223361]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='[SALES (Sheet12)]*(-1)' />
+      </column>
+      <column caption='Margin' datatype='real' name='[Calculation_3566569452334690306]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [MAKTX]=&quot;1L ClearPure&quot; THEN ([DC18PRICE]-11.99)/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;500mL ClearPure&quot; THEN ([DC18PRICE]-16.99)/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;1L Spritz&quot; THEN ([DC18PRICE]-14.99)/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;500mL Spritz&quot; THEN ([DC18PRICE]-19.99)/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;1L Lemon Spritz&quot; THEN ([DC18PRICE]-16.99)/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;500mL Lemon Spritz&quot; THEN ([DC18PRICE]-22.99)/[DC18PRICE]&#10;END' />
+      </column>
+      <column caption='Net Margin' datatype='real' name='[Calculation_3566569452336414723]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [MAKTX]=&quot;1L ClearPure&quot; THEN ([DC18PRICE]-11.99-[MARKETING])/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;500mL ClearPure&quot; THEN ([DC18PRICE]-16.99-[MARKETING])/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;1L Spritz&quot; THEN ([DC18PRICE]-14.99-[MARKETING])/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;500mL Spritz&quot; THEN ([DC18PRICE]-19.99-[MARKETING])/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;1L Lemon Spritz&quot; THEN ([DC18PRICE]-16.99-[MARKETING])/[DC18PRICE]&#10;ELSEIF  [MAKTX]=&quot;500mL Lemon Spritz&quot; THEN ([DC18PRICE]-22.99-[MARKETING])/[DC18PRICE]&#10;END' />
+      </column>
+      <column caption='Price per team/product(Price Marketing)' datatype='real' name='[DC18PRICE]' role='measure' type='quantitative' />
+      <column caption='Profit values in Euros per Teams ID(Profit Sales)' datatype='real' name='[GLPROFIT]' role='measure' type='quantitative' />
+      <column caption='Inventory available(Sales Inventory)' datatype='integer' name='[INVENTORY]' role='measure' type='quantitative' />
+      <column caption='Material description(Sales Inventory)' datatype='string' name='[MAKTX]' role='dimension' type='nominal' />
+      <column caption='One of three files(Profit Sales)' datatype='string' name='[MANDT (Sheet12)]' role='dimension' type='nominal' />
+      <column caption='Mandt(Sales Inventory)' datatype='string' name='[MANDT]' role='dimension' type='nominal' />
+      <column caption='Marketing cost(Price Marketing)' datatype='integer' name='[MARKETING]' role='measure' type='quantitative' />
+      <column caption='Product types(Price Marketing)' datatype='string' name='[MATNR (Sheet11)]' role='dimension' type='nominal' />
+      <column caption='Product types(Sales Inventory)' datatype='string' name='[MATNR]' role='dimension' type='nominal' />
+      <column caption='Sales values in Euros per Teams ID(Profit Sales)' datatype='real' name='[SALES (Sheet12)]' role='measure' type='quantitative' />
+      <column caption='Sales quantity(Sales Inventory)' datatype='integer' name='[SALES]' role='measure' type='quantitative' />
+      <column caption='Quarters(Price Marketing)' datatype='integer' datatype-customized='true' name='[VIRTTIME (Sheet11) - Split 1]' role='dimension' type='ordinal' user:SplitFieldIndex='3' user:SplitFieldOrigin='[federated.0uyr1cv09bsyrm15ny7c718jd5zt].[VIRTTIME (Sheet11)]'>
+        <calculation class='tableau' formula='INT(SPLIT( [VIRTTIME (Sheet11)], &quot;/&quot;, 1 ))' />
+      </column>
+      <column aggregation='Sum' caption='Days(Price Marketing)' datatype='integer' name='[VIRTTIME (Sheet11) - Split 2]' role='dimension' type='ordinal' user:SplitFieldIndex='4' user:SplitFieldOrigin='[federated.0uyr1cv09bsyrm15ny7c718jd5zt].[VIRTTIME (Sheet11)]'>
+        <calculation class='tableau' formula='INT( SPLIT( [VIRTTIME (Sheet11)], &quot;/&quot;, 2 ) )' />
+      </column>
+      <column caption='Time interval, quarters(Price Marketing)' datatype='string' name='[VIRTTIME (Sheet11)]' role='dimension' type='nominal' />
+      <column caption='Quarters(Profit Sales)' datatype='integer' datatype-customized='true' name='[VIRTTIME (Sheet12) - Split 1]' role='dimension' type='ordinal' user:SplitFieldIndex='5' user:SplitFieldOrigin='[federated.0uyr1cv09bsyrm15ny7c718jd5zt].[VIRTTIME (Sheet12)]'>
+        <calculation class='tableau' formula='INT(SPLIT( [VIRTTIME (Sheet12)], &quot;/&quot;, 1 ))' />
+      </column>
+      <column caption='Days(Profit Sales)' datatype='integer' datatype-customized='true' name='[VIRTTIME (Sheet12) - Split 2]' role='dimension' type='ordinal' user:SplitFieldIndex='6' user:SplitFieldOrigin='[federated.0uyr1cv09bsyrm15ny7c718jd5zt].[VIRTTIME (Sheet12)]'>
+        <calculation class='tableau' formula='INT(SPLIT( [VIRTTIME (Sheet12)], &quot;/&quot;, 2 ))' />
+      </column>
+      <column caption='Time interval, quarters(Profit Sales)' datatype='string' name='[VIRTTIME (Sheet12)]' role='dimension' type='nominal' />
+      <column caption='Quarters(Sales Inventory)' datatype='integer' datatype-customized='true' name='[VIRTTIME - Split 1]' role='dimension' type='ordinal' user:SplitFieldIndex='1' user:SplitFieldOrigin='[federated.0uyr1cv09bsyrm15ny7c718jd5zt].[VIRTTIME]'>
+        <calculation class='tableau' formula='INT(SPLIT( [VIRTTIME], &quot;/&quot;, 1 ))' />
+      </column>
+      <column caption='Days(Sales Inventory)' datatype='integer' datatype-customized='true' name='[VIRTTIME - Split 2]' role='dimension' type='ordinal' user:SplitFieldIndex='2' user:SplitFieldOrigin='[federated.0uyr1cv09bsyrm15ny7c718jd5zt].[VIRTTIME]'>
+        <calculation class='tableau' formula='INT(SPLIT( [VIRTTIME], &quot;/&quot;, 2 ))' />
+      </column>
+      <column caption='Time Interval, quarters(Sales Inventory)' datatype='string' name='[VIRTTIME]' role='dimension' type='nominal' />
+      <column caption='Teams ID(Price Marketing)' datatype='string' name='[VKORG]' role='dimension' type='nominal' />
+      <column caption='Teams ID(Sales Inventory)' datatype='string' name='[WERKS]' role='dimension' type='nominal' />
+      <_.fcp.ObjectModelTableType.true...column caption='Sheet1' datatype='table' name='[__tableau_internal_object_id__].[Sheet1_C4001F16623643A989F61819A8F32DB4]' role='measure' type='quantitative' />
+      <extract _.fcp.ObjectModelExtractV2.true...object-id='' count='-1' enabled='false' units='records'>
+        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='Data/tableau-temp/TEMP_1dnu9o41edpcfu1b04a2804yw0fo.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='04/11/2022 02:42:52 AM' username='tableau_internal_user'>
+          <_.fcp.ObjectModelEncapsulateLegacy.false...relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <_.fcp.ObjectModelEncapsulateLegacy.true...relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <cols>
+            <map key='[AREA]' value='[Extract].[AREA]' />
+            <map key='[BUKRS]' value='[Extract].[BUKRS]' />
+            <map key='[CURRENCY (Sheet11)]' value='[Extract].[CURRENCY]' />
+            <map key='[CURRENCY (Sheet12)]' value='[Extract].[CURRENCY1]' />
+            <map key='[CURRENCY]' value='[Extract].[CURRENCY2]' />
+            <map key='[DC18PRICE]' value='[Extract].[DC18PRICE]' />
+            <map key='[GLPROFIT]' value='[Extract].[GLPROFIT]' />
+            <map key='[INVENTORY]' value='[Extract].[INVENTORY]' />
+            <map key='[MAKTX]' value='[Extract].[MAKTX]' />
+            <map key='[MANDT (Sheet11)]' value='[Extract].[MANDT]' />
+            <map key='[MANDT (Sheet12)]' value='[Extract].[MANDT1]' />
+            <map key='[MANDT]' value='[Extract].[MANDT2]' />
+            <map key='[MARKETING]' value='[Extract].[MARKETING]' />
+            <map key='[MATNR (Sheet11)]' value='[Extract].[MATNR]' />
+            <map key='[MATNR]' value='[Extract].[MATNR1]' />
+            <map key='[SALES (Sheet12)]' value='[Extract].[SALES]' />
+            <map key='[SALES]' value='[Extract].[SALES1]' />
+            <map key='[VIRTTIME (Sheet11)]' value='[Extract].[VIRTTIME]' />
+            <map key='[VIRTTIME (Sheet12)]' value='[Extract].[VIRTTIME1]' />
+            <map key='[VIRTTIME]' value='[Extract].[VIRTTIME2]' />
+            <map key='[VKORG]' value='[Extract].[VKORG]' />
+            <map key='[WERKS]' value='[Extract].[WERKS]' />
+          </cols>
+          <refresh>
+            <refresh-event add-from-file-path='Sales Inventory+ (Multiple Connections)' increment-value='%null%' refresh-type='create' rows-inserted='32490' timestamp-start='2022-04-11 02:42:51.153' />
+          </refresh>
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>MANDT2</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[MANDT]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MANDT2</remote-alias>
+              <ordinal>0</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>WERKS</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[WERKS]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>WERKS</remote-alias>
+              <ordinal>1</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>5</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>MATNR1</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[MATNR]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MATNR1</remote-alias>
+              <ordinal>2</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>30</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>MAKTX</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[MAKTX]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MAKTX</remote-alias>
+              <ordinal>3</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>6</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>INVENTORY</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[INVENTORY]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>INVENTORY</remote-alias>
+              <ordinal>4</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>1557</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>SALES1</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[SALES]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>SALES1</remote-alias>
+              <ordinal>5</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>504</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>CURRENCY2</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[CURRENCY]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>CURRENCY2</remote-alias>
+              <ordinal>6</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>VIRTTIME2</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[VIRTTIME]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>VIRTTIME2</remote-alias>
+              <ordinal>7</ordinal>
+              <family>Sales Inventory</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>60</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>MANDT</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[MANDT (Sheet11)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MANDT</remote-alias>
+              <ordinal>8</ordinal>
+              <family>Price Marketing</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>VKORG</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[VKORG]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>VKORG</remote-alias>
+              <ordinal>9</ordinal>
+              <family>Price Marketing</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>5</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>MATNR</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[MATNR (Sheet11)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MATNR</remote-alias>
+              <ordinal>10</ordinal>
+              <family>Price Marketing</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>30</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>AREA</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[AREA]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>AREA</remote-alias>
+              <ordinal>11</ordinal>
+              <family>Price Marketing</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>3</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>DC18PRICE</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[DC18PRICE]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>DC18PRICE</remote-alias>
+              <ordinal>12</ordinal>
+              <family>Price Marketing</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>97</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>MARKETING</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[MARKETING]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MARKETING</remote-alias>
+              <ordinal>13</ordinal>
+              <family>Price Marketing</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>17</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>CURRENCY</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[CURRENCY (Sheet11)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>CURRENCY</remote-alias>
+              <ordinal>14</ordinal>
+              <family>Price Marketing</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>VIRTTIME</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[VIRTTIME (Sheet11)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>VIRTTIME</remote-alias>
+              <ordinal>15</ordinal>
+              <family>Price Marketing</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>60</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>MANDT1</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[MANDT (Sheet12)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>MANDT1</remote-alias>
+              <ordinal>16</ordinal>
+              <family>Profit Sales</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>BUKRS</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[BUKRS]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>BUKRS</remote-alias>
+              <ordinal>17</ordinal>
+              <family>Profit Sales</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>5</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>CURRENCY1</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[CURRENCY (Sheet12)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>CURRENCY1</remote-alias>
+              <ordinal>18</ordinal>
+              <family>Profit Sales</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>GLPROFIT</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[GLPROFIT]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>GLPROFIT</remote-alias>
+              <ordinal>19</ordinal>
+              <family>Profit Sales</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>413</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>SALES</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[SALES (Sheet12)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>SALES</remote-alias>
+              <ordinal>20</ordinal>
+              <family>Profit Sales</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>400</approx-count>
+              <contains-null>true</contains-null>
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>VIRTTIME1</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[VIRTTIME (Sheet12)]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>VIRTTIME1</remote-alias>
+              <ordinal>21</ordinal>
+              <family>Profit Sales</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>60</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='1' name='LEN_RUS_S2' />
+              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_C4001F16623643A989F61819A8F32DB4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+      <field-sort-info field-sort-order-type='custom-order'>
+        <field-sort-custom-order field='MANDT' />
+        <field-sort-custom-order field='WERKS' />
+        <field-sort-custom-order field='MATNR' />
+        <field-sort-custom-order field='MAKTX' />
+        <field-sort-custom-order field='INVENTORY' />
+        <field-sort-custom-order field='SALES' />
+        <field-sort-custom-order field='CURRENCY' />
+        <field-sort-custom-order field='VIRTTIME' />
+        <field-sort-custom-order field='MANDT (Sheet11)' />
+        <field-sort-custom-order field='VKORG' />
+        <field-sort-custom-order field='MATNR (Sheet11)' />
+        <field-sort-custom-order field='AREA' />
+        <field-sort-custom-order field='DC18PRICE' />
+        <field-sort-custom-order field='MARKETING' />
+        <field-sort-custom-order field='CURRENCY (Sheet11)' />
+        <field-sort-custom-order field='VIRTTIME (Sheet11)' />
+        <field-sort-custom-order field='MANDT (Sheet12)' />
+        <field-sort-custom-order field='BUKRS' />
+        <field-sort-custom-order field='CURRENCY (Sheet12)' />
+        <field-sort-custom-order field='GLPROFIT' />
+        <field-sort-custom-order field='SALES (Sheet12)' />
+        <field-sort-custom-order field='Calculation_3566569452333752320' />
+        <field-sort-custom-order field='Calculation_3566569452334223361' />
+        <field-sort-custom-order field='Calculation_3566569452334690306' />
+        <field-sort-custom-order field='Calculation_3566569452336414723' />
+        <field-sort-custom-order field='VIRTTIME (Sheet12)' />
+        <field-sort-custom-order field='VIRTTIME (Sheet11) - Split 1' />
+        <field-sort-custom-order field='VIRTTIME (Sheet11) - Split 2' />
+        <field-sort-custom-order field='VIRTTIME (Sheet12) - Split 1' />
+        <field-sort-custom-order field='VIRTTIME (Sheet12) - Split 2' />
+        <field-sort-custom-order field='VIRTTIME - Split 1' />
+        <field-sort-custom-order field='VIRTTIME - Split 2' />
+      </field-sort-info>
+      <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+        <objects>
+          <object caption='Sheet1' id='Sheet1_C4001F16623643A989F61819A8F32DB4'>
+            <properties context=''>
+              <relation join='full' type='join'>
+                <clause type='join'>
+                  <expression op='AND'>
+                    <expression op='='>
+                      <expression op='[Sales Inventory].[WERKS]' />
+                      <expression op='[Profit Sales].[BUKRS]' />
+                    </expression>
+                    <expression op='='>
+                      <expression op='[Sales Inventory].[VIRTTIME]' />
+                      <expression op='[Profit Sales].[VIRTTIME]' />
+                    </expression>
+                  </expression>
+                </clause>
+                <relation join='full' type='join'>
+                  <clause type='join'>
+                    <expression op='AND'>
+                      <expression op='='>
+                        <expression op='[Sales Inventory].[WERKS]' />
+                        <expression op='[Price Marketing].[VKORG]' />
+                      </expression>
+                      <expression op='='>
+                        <expression op='[Sales Inventory].[VIRTTIME]' />
+                        <expression op='[Price Marketing].[VIRTTIME]' />
+                      </expression>
+                    </expression>
+                  </clause>
+                  <relation connection='excel-direct.1qfv3hd1hdh21y1ewozrf0ri0n96' name='Sales Inventory' table='[Sheet1$]' type='table'>
+                    <columns gridOrigin='A1:H1801:no:A1:H1801:0' header='yes' outcome='2'>
+                      <column datatype='string' name='MANDT' ordinal='0' />
+                      <column datatype='string' name='WERKS' ordinal='1' />
+                      <column datatype='string' name='MATNR' ordinal='2' />
+                      <column datatype='string' name='MAKTX' ordinal='3' />
+                      <column datatype='integer' name='INVENTORY' ordinal='4' />
+                      <column datatype='integer' name='SALES' ordinal='5' />
+                      <column datatype='string' name='CURRENCY' ordinal='6' />
+                      <column datatype='string' name='VIRTTIME' ordinal='7' />
+                    </columns>
+                  </relation>
+                  <relation connection='excel-direct.0iabptp1caa6hq1ctkn0v1q45qdn' name='Price Marketing' table='[Sheet1$]' type='table'>
+                    <columns gridOrigin='A1:H5491:no:A1:H5491:0' header='yes' outcome='2'>
+                      <column datatype='string' name='MANDT' ordinal='0' />
+                      <column datatype='string' name='VKORG' ordinal='1' />
+                      <column datatype='string' name='MATNR' ordinal='2' />
+                      <column datatype='string' name='AREA' ordinal='3' />
+                      <column datatype='real' name='DC18PRICE' ordinal='4' />
+                      <column datatype='integer' name='MARKETING' ordinal='5' />
+                      <column datatype='string' name='CURRENCY' ordinal='6' />
+                      <column datatype='string' name='VIRTTIME' ordinal='7' />
+                    </columns>
+                  </relation>
+                </relation>
+                <relation connection='excel-direct.119olx303f42ka1egjexc1bo6tmb' name='Profit Sales' table='[Sheet1$]' type='table'>
+                  <columns gridOrigin='A1:F301:no:A1:F301:0' header='yes' outcome='2'>
+                    <column datatype='string' name='MANDT' ordinal='0' />
+                    <column datatype='string' name='BUKRS' ordinal='1' />
+                    <column datatype='string' name='CURRENCY' ordinal='2' />
+                    <column datatype='real' name='GLPROFIT' ordinal='3' />
+                    <column datatype='real' name='SALES' ordinal='4' />
+                    <column datatype='string' name='VIRTTIME' ordinal='5' />
+                  </columns>
+                </relation>
+              </relation>
+            </properties>
+            <properties context='extract'>
+              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Sheet 1'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{152FE6D2-B29B-4D66-9B57-12F5C996CA40}' />
+    </worksheet>
+  </worksheets>
+  <windows source-height='30'>
+    <window class='worksheet' maximized='true' name='Sheet 1'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{A4884F0B-27B2-4409-9AB5-B0603DC21C12}' />
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='384' name='Sheet 1' width='384'>
+      iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAYAAACkx7W/AAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAAFXUlEQVR4nO3VMQEAIAzAMMC/5yFjRxMF/XpnZg4AOW87AIAdBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEfFxoG/IiMv0YAAAAASUVORK5CYII=
+    </thumbnail>
+  </thumbnails>
+</workbook>
