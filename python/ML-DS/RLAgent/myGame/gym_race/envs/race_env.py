@@ -8,7 +8,7 @@ class RaceEnv(gym.Env):
     def __init__(self):
         print("init")
         self.action_space = spaces.Discrete(3)
-        self.observation_space = spaces.Box(np.array([0, 0, 0, 0, 0]), np.array([10, 10, 10, 10, 10]), dtype=np.int)
+        self.observation_space = spaces.Box(np.array([0, 0, 0, 0, 0]), np.array([10, 10, 10, 10, 10]), dtype=np.int64)
         self.is_view = True
         self.pyrace = PyRace2D(self.is_view)
         self.memory = []
