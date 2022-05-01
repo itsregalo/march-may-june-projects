@@ -42,33 +42,33 @@ int main()
     {  
         pthread_create(&tid[i], NULL, racer, (void *)&r[i]);  
         printf("Thread %d created\n", i);
+        pthread_join(tid[i], &status);
  
     }  
   
     /* wait for the join of 2 threads */  
      for (i = 0; i < THREAD_NUM; i++)  
      {  
-        printf("Waiting for thread %d to finish\n", i);
-        pthread_join(tid[i], &status);
+        pthread_join(tid[i], &status);  
         printf("Thread %d joined\n", i);
+        printf("Thread %d joined with status %d\n", i , *(int *)status);
+    //print winner with max rounds
 
-
-     }   
-      
-    printf("\n");  
-    for(i=0; i<THREAD_NUM; i++)  
+    }
+     for(i=0; i<THREAD_NUM; i++)  
         printf("Racer %d finished %d rounds!!\n", i, numRounds[i]);  
      
  if(numRounds[0]>=numRounds[1]) printf("\n RACER-0 WINS.\n\n");  
  else  printf("\n RACER-1 WINS..\n\n");  
  
- return (0);  
+ return (0); 
 }  
   
   
 void *racer(void  *arg)  
 {   
   int  index = *(int*)arg, NotYet; 
+  int i;
   
     while( (numRounds[0] < MAX_ROUNDS) && (numRounds[1] < MAX_ROUNDS) )  
     {  
@@ -77,18 +77,25 @@ void *racer(void  *arg)
 
        /* RACER 0 tries to get both locks before she makes a round */  
       if(index==0){
+    //racer 0 try access lock 0
         pthread_mutex_lock(&B0);
         pthread_mutex_lock(&B1);
         NotYet = FALSE;
+
+        pthread_mutex_unlock(&B1);
+        pthread_mutex_unlock(&B0);
+        printf("Racer %d released both locks\n", index);
+
 
       }
 
        /* RACER 1 tries to get both locks before she makes a round */  
       if(index==1){
+    //racer 1 try access lock 1
         pthread_mutex_lock(&B1);
         pthread_mutex_lock(&B0);
         NotYet = FALSE;
-	
+       
 
       } 
        numRounds[index]++;      /* Make one more round */
@@ -97,12 +104,15 @@ void *racer(void  *arg)
        /* unlock both locks */  
        pthread_mutex_unlock(&B0);  
        pthread_mutex_unlock(&B1);  
+       /* random yield to another thread */
  
-       /* random yield to another thread */ 
              
     }
     
-printf("racer %d made %d rounds !\n", index, numRounds[index]);  
+printf("racer %d made %d rounds !\n", index, numRounds[index]);
+ if(numRounds[0]>=numRounds[1]) printf("\n RACER-0 WINS.\n\n");  
+ else  printf("\n RACER-1 WINS..\n\n");
+ 
 
 pthread_exit(0);  
 
