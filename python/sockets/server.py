@@ -79,6 +79,9 @@ if __name__ == '__main__':
                         # remove the socket that's broken
                         if sock in CONNECTION_LIST:
                             CONNECTION_LIST.remove(sock)
+
+                            # when the user sends Exit message
+                            
                         # at this stage, no data means probably the connection has been broken
                         broadcast_data(sock, "Client (%s, %s) is offline" % record[sock])
                         # remove client from record
