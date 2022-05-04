@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
                 # if user repeats the username
                 if name in record.values():
-                    sockfd.send("Username already taken!")
+                    sockfd.send(("Username already taken!\n").encode())
                     del record[sockfd]
                     CONNECTION_LIST.remove(sockfd)
                     sockfd.close()
@@ -64,7 +64,7 @@ if __name__ == '__main__':
                     # add name and address
                     record[sockfd] = name
                     print("Client (%s, %s) connected" % addr," [",record[sockfd],"]")
-                    sockfd.send(("Welcome to chat room. Enter 'Exit' anytime to exit").encode())
+                    sockfd.send(("Welcome to chat room. Enter 'Exit' anytime to exit\n").encode())
                     broadcast_data(sockfd, name+" joined the conversation")
 
             # a message from a client
