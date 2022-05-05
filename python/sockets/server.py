@@ -55,7 +55,8 @@ if __name__ == '__main__':
 
                 # if user repeats the username
                 if name in record.values():
-                    sockfd.send(("Username already taken!\n").encode())
+                    # send a message to the client as bytes object
+                    sockfd.send(b"Username already taken. Please choose another username.")
                     del record[sockfd]
                     CONNECTION_LIST.remove(sockfd)
                     sockfd.close()
