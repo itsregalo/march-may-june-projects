@@ -1,12 +1,7 @@
 import dis
 import socket, select, sys
 
-"""
-To start chatting, client should get connected to
-the server where it can experience two types of chatting, public where messages are
-broadcasted to all connected users (clients) and private chatting where chatting only
-occurs between two parties.
-"""
+
 
 # helper func
 def display():
@@ -16,8 +11,8 @@ def display():
 
 def main():
     if len(sys.argv) < 3:
-        host = 'localhost'
-        port = 5000
+        host = '127.0.0.1'
+        port = 8002
     else:
         host = sys.argv[1]
         port = int(sys.argv[2])
@@ -42,13 +37,14 @@ def main():
     except socket.error as msg:
         print('Failed to connect. Error: ' + str(msg))
         sys.exit()
+
     # send username and password to the server
     s.send(username.encode('utf-8'))
     s.send(password.encode('utf-8'))
     s.send(str(chat_type).encode('utf-8'))
 
     display()
-    while 1:
+    while True:
         socket_list = [sys.stdin, s]
         # Get the list sockets which are readable
         read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
@@ -56,20 +52,20 @@ def main():
             if sock == s:
                 # incoming message from server
                 data = sock.recv(4096)
+                print(data)
                 if not data:
                     print('\nDisconnected from chat server')
                     sys.exit()
                 else:
                     # print data
-                    print(data.decode('utf-8'))
+                    sys.stdout.write(data.decode('utf-8'))
                     display()
             else:
                 # user entered a message
                 msg = sys.stdin.readline()
                 s.send(msg.encode('utf-8'))
                 display()
-                sys.stdin.flush()
 
-if __main__ == "__main__":
+if __name__ == "__main__":
     main()
 

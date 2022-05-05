@@ -1,7 +1,5 @@
 import socket, select, sys
 
-from numpy import record
-
 # Function to send message to all connected clients
 def broadcast_data (sock, message):
     for socket in CONNECTION_LIST:
@@ -25,88 +23,92 @@ def send_private_data (sock, message):
                 PRIVATE_CONNECTION_LIST.remove(socket)
 
 if __name__ == '__main__':
-    # List to keep track of socket descriptors
+    name=""
+
+    # dictionary to store the username, password and type of chat
+    user_details = {}
+    
+    # list to store the socket connections
     CONNECTION_LIST = []
     PRIVATE_CONNECTION_LIST = []
-    RECV_BUFFER = 4096 # Advisable to keep it as an exponent of 2
-    PORT = 5000
-    HOST = '127.0.0.1'
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind((HOST, PORT))
-    server_socket.listen(10)
-    CONNECTION_LIST.append(server_socket)
-    print("Chat server started on port " + str(PORT))
 
-    while True:
-        name = ''
-        record = {}
-        # Get the list sockets which are ready to be read through select
+    buffer = 4096
+    port = 8002
+    # create a socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # bind the socket to a port
+    server_socket.bind(('127.0.0.1', port))
+    server_socket.listen(10)
+
+    # add server socket to the list of readable connections
+    CONNECTION_LIST.append(server_socket)
+    print('Chat server started on port ' + str(port))
+
+    # loop for ever
+    while 1:
+        # get the list sockets which are ready to be read through select
         read_sockets, write_sockets, error_sockets = select.select(CONNECTION_LIST, [], [])
         for sock in read_sockets:
-            # New connection
+            # new connection
             if sock == server_socket:
-                # Handle the case in which there is a new connection recieved through server_socket
+                # accept the connection
                 sockfd, addr = server_socket.accept()
+                name = sockfd.recv(buffer).decode('utf-8')
                 CONNECTION_LIST.append(sockfd)
-                print("Client (%s, %s) connected" % addr)
-                broadcast_data(sockfd, "Client (%s, %s) connected" % addr)
-                # record the client name
-                record[sockfd] = addr[0]
-                # if user repeats the username
-                if name in record.values():
-                    # send a message to the client as bytes object
-                    sockfd.send(b"Username already taken. Please choose another username.")
-                    del record[sockfd]
+                user_details[addr] = None
+
+                # if user is already in the list, send a message to the user
+                if name in user_details.values():
+                    sockfd.send("Username already taken. Please try again".encode('utf-8'))
+                    del user_details[addr]
                     CONNECTION_LIST.remove(sockfd)
                     sockfd.close()
                     continue
                 else:
-                    # add name and address
-                    record[sockfd] = name
-                    print("Client (%s, %s) connected" % addr," [",record[sockfd],"]")
-                    sockfd.send(b"Welcome to the chat server")
-            # Some incoming message from a client
+                    user_details[addr] = name
+                    print('Got connection from', addr)
+                    sockfd.send("Welcome to the chat server".encode('utf-8'))
+                    broadcast_data(sockfd, '\r' + name + ' entered the chat\n')
+                    # continue
+           
             else:
-                # Data recieved from client, process it
+                 # message from a client
                 try:
-                    # In Windows, sometimes when a TCP program closes abruptly,
-                    # a "Connection reset by peer" exception will be thrown
-                    data = sock.recv(RECV_BUFFER)
-                    if data:
-                        # broadcast message
-                        broadcast_data(sock, "\r" + '<' + str(record[sock]) + '> ' + data)
-                        # send private message
-                        if data.startswith('@'):
-                            # get the name of the client
-                            name = data.split('@')[1]
-                            # get the message
-                            message = data.split('@')[2]
-                            # send private message
-                            send_private_data(sock, "\r" + '<' + str(record[sock]) + '> ' + message)
-                        # if the client sends the message "quit"
-                        if data == "quit":
-                            # remove the client from the list
-                            CONNECTION_LIST.remove(sock)
-                            PRIVATE_CONNECTION_LIST.remove(sock)
-                            # send a message to the client
-                            sock.send(b"Client disconnected")
-                            # close the socket
-                            sock.close()
-                            # remove the client from the list
-                            CONNECTION_LIST.remove(sock)
-                            PRIVATE_CONNECTION_LIST.remove(sock)
-                            # send a message to the client
-                            broadcast_data(sock, "Client (%s, %s) disconnected" % addr)
+                    newData = sock.recv(buffer)
+                    data = newData[:newData.index(b'\n')]
+
+                    # get address of the client
+                    i, p = sock.getpeername()
+                    # get the username of the client
+                    
+                    if data == 'BYE':
+                        broadcast_data(sock, '\r' + user_details[(i, p)] + ' left the chat\n')
+                        # user left the chat
+                        print(user_details[(i, p)] + ' left the chat')
+                        del user_details[(i, p)]
+                        CONNECTION_LIST.remove(sock)
+                        sock.close()
+                        continue
+                    else:
+                        # send message to all connected clients
+                        broadcast_data(sock, '\r' + user_details[(i, p)] + ': ' + data.decode('utf-8') + '\n')
+                        # send message to all private clients
+                        if data[0] == '@':
+                            send_private_data(sock, '\r' + user_details[(i, p)] + ': ' + data.decode('utf-8') + '\n')
+                        # continue
                 except:
-                    # send a message to the client
-                    sock.send(b"Client disconnected")
-                    # close the socket
-                    sock.close()
-                    # remove the client from the list
+                    (i,p) = sock.getpeername()
+                    broadcast_data(sock, '\r' + user_details[(i, p)] + ' left the chat\n')
+                    # user left the chat
+                    print(user_details[(i, p)] + ' left the chat')
+                    del user_details[(i, p)]
                     CONNECTION_LIST.remove(sock)
-                    PRIVATE_CONNECTION_LIST.remove(sock)
-                    # send a message to the client
-                    broadcast_data(sock, "Client (%s, %s) disconnected" % addr)
+                    sock.close()
                     continue
     server_socket.close()
+
+
+
+
+                
