@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import random
 from collections import namedtuple, deque
 
-from model_pytorch import QNetwork
+from pytorch_model import QNetwork
 import matplotlib as mpl
 
 import torch
@@ -26,14 +26,6 @@ class Agent:
     """Interacts with and learns from the environment."""
 
     def __init__(self, actions, state, seed=0):
-        """Initialize an Agent object.
-        
-        Params
-        ======
-            state_size (int): dimension of each state
-            action_size (int): dimension of each action
-            seed (int): random seed
-        """
         self.actions_list = actions
         self.state_features_list = state
         state_size = len(state)
@@ -47,15 +39,11 @@ class Agent:
         self.q_network_local = QNetwork(state_size, action_size, seed).to(device)
         self.q_network_target = QNetwork(state_size, action_size, seed).to(device)
 
-        # construct an Optimizer -  torch_optimization.SGD(model.parameters(), lr = 0.01, momentum=0.9)
+        # define optimizer
         # specify the tensors that should be optimized: q_network_local. Not q_network_target!
         # learning rate (default: 1e-3)
         self.optimizer = torch_optimization.Adam(params=self.q_network_local.parameters(), lr=LR)
         # ToDo: Adjust Learning Rate
-        # scheduler = torch_optimization.lr_scheduler.StepLR(self.optimizer, step_size=30, gamma=0.1)
-        # scheduler.step()
-
-        # define Replay Memory (uniform)
         self.memory = ReplayBuffer(action_size, BUFFER_SIZE, BATCH_SIZE, seed)
         # Initialize time step (for updating every UPDATE_EVERY steps)
         self.t_step = 0
@@ -72,12 +60,6 @@ class Agent:
     def step(self, state, action, reward, next_state, done):
         """ Save a transition """
         action_id = self.actions_list.index(action)
-
-        # normalize
-        # state[0] = state[0] / 20
-        # state[1] = state[1] / 5
-        # next_state[0] = next_state[0] / 20
-        # next_state[1] = next_state[1] / 5
 
         # Save experience in replay memory
         state = self.state_processing(state)
@@ -136,9 +118,7 @@ class Agent:
                 actions_values = action_values.cpu().data.numpy()
                 actions_values = actions_values[0]
 
-                # print("q_values for [state = {}] = {}".format(state, actions_values))
                 self.v_table[pos, vel] = np.max(actions_values)
-        # print(self.v_table)
 
     def plot_v_value_map(self):
 
@@ -219,19 +199,9 @@ class Agent:
         ax.set_yticklabels(np.arange(0, 20, 1))
 
         ax.grid()
-        # plt.show()
 
     def choose_action(self, state, masked_actions_list, greedy_epsilon):  # act()
-        """
-        Returns actions for given state as per current policy
-        Read q-values from the neural net (function approximator)
-        Apply masking and e-greedy selection
 
-        :param state: (array_like): current state
-        :param masked_actions_list:
-        :param greedy_epsilon: (float): epsilon, for epsilon-greedy action selection
-        :return: the int index of the action - in range(action_state_size)
-        """
         # Creates a torch Tensor from a numpy.ndarray
         # print("choose_action in state = {}".format(state))
         self.count_state(state)
@@ -258,8 +228,6 @@ class Agent:
             # Retrieve a tensor held by the Variable action_values.cpu(), using the .data attribute
             actions_values = action_values.cpu().data.numpy()
             actions_values = actions_values[0]
-            # print("action_values.cpu().data.numpy() = {}".format(actions_values))
-            # print("possible_actions = {}".format(possible_actions))
 
             for action in self.actions_list:
                 if action not in possible_actions:
@@ -269,15 +237,11 @@ class Agent:
             # make decision
             if np.all(np.isneginf([actions_values])):
                 action_id = random.choice(possible_actions)
-                # print('random action sampled among allowed actions')
             else:
                 action_id = np.argmax(actions_values)
             selected_action = self.actions_list[action_id]
         else:
-            # action_id = random.choice(np.arange(self.action_size))
             selected_action = random.choice(possible_actions)
-
-        # print("selected_action = {}".format(selected_action))
 
         return selected_action
 
@@ -302,22 +266,12 @@ class Agent:
         return action_values[action_id]
 
     def learn(self, experiences, gamma):
-        """
-        Update value parameters using given batch of experience tuples.
-
-        :param experiences: (Tuple[torch.Tensor]): tuple of (s, a, r, s', done) tuples
-        :param gamma: (float): discount factor
-        :return: -
-        """
-        # print("experiences = {}".format(experiences))
-        # print("\n-- learn() --")
 
         states, actions, rewards, next_states, dones = experiences
 
         # Get max predicted Q valueS (for EACH next state) from target model
         # use detach() to get a new Tensor, detached from the current graph.
         q_targets_next = self.q_network_target(next_states).detach().max(1)[0].unsqueeze(1)
-        # print("q_targets_next = {}".format(q_targets_next))
 
         # Compute Q targets for current states
         q_targets = rewards + (gamma * q_targets_next * (1 - dones))
@@ -327,16 +281,8 @@ class Agent:
         q_expected = self.q_network_local(states).gather(1, actions)
 
         # Compute loss
-        # print("q_expected = {}".format(q_expected))
-        # print("q_targets = {}".format(q_targets))
-        # td_error = q_targets - q_expected
-        # np_td_error = td_error.data.cpu().numpy()  # torch tensor to numpy array
-        # print("np_td_error = {}".format(np_td_error))
-        # td_loss = (np_td_error ** 2).mean()
-        # print("td_loss = {}".format(td_loss))
 
         loss = nn_functional.mse_loss(q_expected, q_targets)  # the element-wise mean squared error
-        # print("loss = {}".format(loss))
 
         # Minimize the loss
         self.optimizer.zero_grad()  # Clears the gradients of all optimized torch.Tensors
@@ -344,32 +290,16 @@ class Agent:
         loss.backward()  # the gradients are computed
         self.optimizer.step()  # step() method, that updates the parameters
 
-        # q_expected_after_step = self.q_network_local(states).gather(1, actions)
-        # print("q_expected_after_step = {}".format([elem[0] for elem in q_expected_after_step.cpu().data.numpy()]))
-        # changes = q_expected_after_step - q_expected
-        # print("change in q_expected = {}".format([elem[0] for elem in changes.cpu().data.numpy()]))
-
         # test if the update can also increase expectations in the local model
-        # if float(torch.max(changes).data) > 0:
-        #     print("expected_value increased")
 
         # ToDo: why "change in q_expected" is not consistent with td_error? Especially for positive td_errors
 
         # ------------------- update target network ------------------- #
         self.soft_update(self.q_network_local, self.q_network_target, TAU)
-        # print("-- --\n")
+        print("-- --\n")
 
     @staticmethod
     def soft_update(local_model, target_model, tau):
-        """
-        By reference, soft update model parameters.
-        θ_target = τ*θ_local + (1 - τ)*θ_target
-
-        :param local_model: (PyTorch model): weights will be copied from
-        :param target_model: (PyTorch model): weights will be copied to
-        :param tau: (float): interpolation parameter
-        :return:
-        """
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
             target_param.data.copy_(tau*local_param.data + (1.0-tau)*target_param.data)
 
@@ -378,16 +308,6 @@ class ReplayBuffer:
     """Fixed-size buffer to store experience tuples."""
 
     def __init__(self, action_size, buffer_size, batch_size, seed):
-        """
-        Initialize a ReplayBuffer object.
-
-        Params
-        ======
-        :param action_size: (int): dimension of each action
-        :param buffer_size: (int): maximum size of buffer
-        :param batch_size: (int): size of each training batch
-        :param seed: (int): random seed
-        """
         self.action_size = action_size
         self.memory = deque(maxlen=buffer_size)  
         self.batch_size = batch_size

@@ -1,77 +1,6 @@
-"""
-This script is the environment part of this example
-In particular:
-
--1- transition model
--	x(t+1) = x(t) + vx(t)∆t
--	vx(t+1) = vx(t) + a(t)∆t
-
--2- reward function with
-(The weighting may change depending on the aggressiveness of the driver)
- -- - time efficiency = Progress
- -- v -- reaching goal = global goal indicators
- -- v -- reaching velocity goal
- -- v -- per-step cost - This term discourages the driver from making unnecessary maneuvers
- -- v -- under-speed
-
- -- - traffic law
- -- v -- over-speed
- -- - -- stop at stop / red light
- -- - -- yield to right
-
- -- - safety = sparse constraint violation alerts
- -- - -- distance to other vehicles
- -- - -- h is headway distance - The range to the car directly in front ([-1; 0; 1 depending on close; nominal; far])
- -- - -- Time-to-Collision (TTC)?
- -- - -- speed difference with other vehicles
- -- - -- speed at intersection
- -- v -- speed near obstacles
- -- - -- crash
- -- - -- braking distance
-
- -- - comfort and effort
- -- - --  include a cost of changing the desire in the reward function
- if changing the
- -- v --  change in actions (esp. avoid stops and sudden braking)
- -- - --  change in acc = jerk
-
-Not covered yet:
- -- - -- traffic disturbance
- -- - -- include also constraints violation (time spent on opposite lane)
- -- - -- fuel consumption
- -- - -- Apply rewards that consider all the over-flight states
- (otherwise, you can jump to escape the pedestrian constrain)
- -- ~v -- Include previous state for that
-
--3- hard constraints
-- imposed before action selection. Should a security check be implemented after the selection?
-YES, when selecting the final trajectory
-- no acceleration allowed if that leads to v>v_max or deceleration that would cause v<0
-- Impose hard constraints to avoid the occurrence of such combinations:
--	1) If a car in the left lane is in a parallel position, the controlled car cannot change lane to the left
--	2) If a car in the right lane is in a parallel position, the controlled car cannot change lane to the right
--	3) If a car in the left lane is “close” and “approaching,” the controlled car cannot change lane to the left
--	4) If a car in the right lane is “close” and “approaching,” the controlled car cannot change lane to the right.
-- The use of these hard constrains eliminates the clearly undesirable behaviors
-better than through penalizing them in the reward function
-- It increases the learning speed during training
-- Also mask some actions:
- -- - -- put a mask on the Q-value associated with the left action such that it is never selected in such a state (if
-already at max left).
- -- v --  if the ego car is driving at the maximum speed then the accelerate action is masked
-
-To do:
-- selecting the final trajectory
-
-The RL is in RL_brain.py.
-"""
 
 import time
 import numpy as np  # but trying to avoid using it (np.array cannot be converted to JSON)
-# import sys
-# if sys.version_info.major == 2:
-#     import Tkinter as tk
-# else:
 import tkinter as tk
 from utils.logger import Logger
 
@@ -83,11 +12,6 @@ Y_COORD = 0  # blocking motion of ego agent in one row - no vertical motion allo
 
 
 def one_hot_encoding(feature_to_encode):
-    """
-
-    :param feature_to_encode: int. For instance 5
-    :return: [0, 0, 0, 0, 0, 1, 0, 0, 0, 0] if MAZE_W=10
-    """
     repr_size = MAZE_W
     one_hot_list = np.zeros(repr_size)
     # one_hot_list = [0] * UNIT
@@ -100,46 +24,16 @@ def one_hot_encoding(feature_to_encode):
 
 
 def process_state(input_state):
-    """
-    extract features from the state to build an "observation"
-    The agent may not know exactly its absolute position.
-    But it may have an estimate of the relative distance to the obstacle
-    Hence compute the difference in position
-    :param input_state:
-    :return: representation of the state understood by the RL agent
-    """
     ego_position = input_state[0]
     velocity = input_state[1]
     # obstacle_position = input_state[2]
     #
     # # one-hot encoding of the state
-    # repr_size = MAZE_W
-    # encoded_position = one_hot_encoding(ego_position)
-    # encoded_velocity = one_hot_encoding(velocity)
-    #
-    # one_hot_state = np.row_stack((encoded_position, encoded_velocity))
-
-    # Filling the state representation with other rows
-    # one_hot_state = np.row_stack((one_hot_state, np.zeros((repr_size, 82))))
-    # nb_iter = repr_size - np.shape(one_hot_state)[0]
-    # for _ in range(nb_iter):
-    #     one_hot_state = np.row_stack((one_hot_state, np.zeros(repr_size)))
-
-    # print("one_hot_state has shape =")
-    # print(np.shape(one_hot_state))  # Here one_hot_state is (84, 84)
 
     # ToDo: increase state for the brain
     return [ego_position, velocity]  # , obstacle_position]
 
     # make one_hot_state have mean 0 and a variance of 1
-    # print(one_hot_state)
-    # print(np.mean(one_hot_state))
-    # print(np.var(one_hot_state))
-    # one_hot_state = (one_hot_state - np.mean(one_hot_state)) / ((np.var(one_hot_state))**0.5)
-    # print(np.var(one_hot_state))
-    # print(np.mean(one_hot_state))
-    # print(one_hot_state)
-    # return one_hot_state
 
 
 # !! Depending is tk is supported or not, manually change the inheritance
@@ -147,14 +41,6 @@ def process_state(input_state):
 # class Road:  # if tk is NOT supported. Then make sure using_tkinter=False
 class Road(tk.Tk, object):  # if tk is supported
     def __init__(self, using_tkinter, actions_names, state_features, initial_state, goal_velocity=4):
-        """
-
-        :param using_tkinter: [bool] flag for the graphical interface
-        :param actions_names: [string] list of possible actions
-        :param state_features: [string] list of features forming the state. sting !!
-        :param initial_state: [list of int]
-        :param goal_velocity: [int]
-        """
         # graphical interface
         if using_tkinter:
             super(Road, self).__init__()
@@ -167,7 +53,6 @@ class Road(tk.Tk, object):  # if tk is supported
         # - velocity
         # - absolute position of obstacle
         self.state_features = state_features
-        # print("state_features = {}".format(state_features))
 
         # Reward - the reward is update
         # - during the transition (hard-constraints)
@@ -212,9 +97,6 @@ class Road(tk.Tk, object):  # if tk is supported
         self.obstacle1_coord = [self.state_obstacle_position, 2]
         self.obstacle2_coord = [1, 3]
         self.initial_position = [self.initial_state[0], Y_COORD]
-        # self.goal_coord = np.array([MAZE_W - 1, 1])
-        # self.obstacle1_coord = np.array([12, 2])
-        # self.obstacle2_coord = np.array([1, 3])
 
         # adjusting the colour of the agent depending on its speed
         colours_list = ["white", "yellow", "orange", "red2", "red3", "red4", "black", "black", "black", "black",
@@ -232,10 +114,6 @@ class Road(tk.Tk, object):  # if tk is supported
         self.rect = None
         self.obstacle = None
 
-        # self.rect = self.canvas.create_rectangle(
-        #     self.origin[0] - HALF_SIZE, self.origin[1] - HALF_SIZE,
-        #     self.origin[0] + HALF_SIZE, self.origin[1] + HALF_SIZE,
-        #     fill='red')
 
         if self.using_tkinter:
             # Tk window
@@ -256,11 +134,7 @@ class Road(tk.Tk, object):  # if tk is supported
         # return random_position_obstacle
 
     def build_road(self):
-        """
-        To build the Tk window
-        Only called once at the start
-        :return:  None
-        """
+
         if self.using_tkinter:
 
             # create canvas
@@ -311,7 +185,6 @@ class Road(tk.Tk, object):  # if tk is supported
         Sample a random position for the obstacle
         :return: the initial state amd the list of the masked actions
         """
-        # self.update() - Not necessary?
         time.sleep(0.005)
         random_position_obstacle = self.sample_position_obstacle()
         self.obstacle1_coord = [random_position_obstacle, 2]
@@ -340,18 +213,11 @@ class Road(tk.Tk, object):  # if tk is supported
         return process_state(self.initial_state), self.masking_function()
 
     def transition(self, action, velocity=None):
-        """
-        update velocity in state according to the desired command
-        :param action: desired action
-        :param velocity: [optional]
-        :return:
-        """
         if velocity is None:
             velocity = self.state_ego_velocity
 
         delta_velocity = 0
 
-        # print("current velocity: %s" % self.state_ego_velocity)
         if action == self.actions_list[0]:  # maintain velocity
             delta_velocity = 0
         elif action == self.actions_list[1]:  # accelerate
@@ -362,27 +228,10 @@ class Road(tk.Tk, object):  # if tk is supported
             delta_velocity = -1
         elif action == self.actions_list[4]:  # slow down a lot
             delta_velocity = -2
-        # print("new velocity: %s" % self.state_ego_velocity)
 
         return velocity + delta_velocity
 
     def step(self, action):
-        """
-        Transforms the action into the new state
-        -calls the transition model
-        -calls checks hard conditions
-        -calls masking - to be implemented
-
-        :param action: [string] the desired action
-        :return: tuple with:
-        -new state (list)
-        -reward (int)
-        -termination_flag (bool)
-        -masked_actions_list (list)
-        """
-        # print("desired action: %s" % action)
-
-        # reminding the previous state
         self.previous_state_velocity = self.state_ego_velocity
         self.previous_state_position = self.state_ego_position
         self.previous_action = action
@@ -402,17 +251,13 @@ class Road(tk.Tk, object):  # if tk is supported
         tk_update_steps = [0, 0]
 
         # update the state - position
-        # print("old position: %s" % self.state_ego_position)
         self.state_ego_position = self.state_ego_position + desired_position_change
         tk_update_steps[0] += desired_position_change * UNIT
-
-        # print("new position: %s" % self.state_ego_position)
 
         if self.using_tkinter:
             # move agent in canvas
             self.canvas.move(self.rect, tk_update_steps[0], tk_update_steps[1])
             # update colour depending on speed
-            # print("self.state_ego_velocity = {}".format(self.state_ego_velocity))
             new_colour = self.colour_velocity_code[self.state_ego_velocity]
             self.canvas.itemconfig(self.rect, fill=new_colour)
 
@@ -431,12 +276,6 @@ class Road(tk.Tk, object):  # if tk is supported
         return state_to_return, reward, termination_flag, masked_actions_list
 
     def reward_function(self, action):
-        """
-        ToDo: normalize it
-        To be refined
-        - it needs to consider all the intermediate points between previous state and new state
-        :return: the reward (int) and termination_flag (bool)
-        """
         # reward put to for the new step
         self.reward = 0
 
@@ -487,9 +326,6 @@ class Road(tk.Tk, object):  # if tk is supported
 
         # limit speed when driving close to a pedestrian
         if self.previous_state_position <= self.obstacle1_coord[0] <= self.state_ego_position:
-            # print(self.previous_state_position)
-            # print('passing the pedestrian')
-            # print(self.state_ego_position)
             if self.state_ego_velocity > self.max_velocity_pedestrian:
                 excess_in_velocity = self.state_ego_velocity - self.max_velocity_pedestrian
                 self.reward += self.rewards_dict["over_speed_near_pedestrian"] * excess_in_velocity
@@ -497,24 +333,11 @@ class Road(tk.Tk, object):  # if tk is supported
                     action, self.state_ego_position, self.state_obstacle_position, self.state_ego_velocity)
                 self.logger.log(message, 1)
 
-        # test about the velocity
-        # if self.state_ego_position == self.pedestrian[0]:
-        #     if self.state_ego_velocity == self.goal_coord[0]:
-        #         self.reward += self.rewards_dict["goal"]
-
-        # normalization
-        # self.reward = 1 + self.reward / max(self.rewards_dict.values())
 
         return self.reward, termination_flag
 
     def masking_function(self, state=None):
-        """
-        hard constraints
-        using the state (position, velocity)
-
-        :param state: [optional]
-        :return: masked_actions_list (a sub_list from self.action_list)
-        """
+        # masking actions that are not possible
 
         if state is None:
             velocity = None
@@ -545,34 +368,18 @@ class Road(tk.Tk, object):  # if tk is supported
         return masked_actions_list
 
     def move_to_state(self, state):
-        """
-        teleportation for model-based DP
-        :return:
-        """
+        # move to a given state
         self.state_ego_position = state[0]
         self.state_ego_velocity = state[1]
         pass
 
     def render(self, sleep_time):
-        """
-        :param sleep_time: [float]
-        necessary for demo()
-        :return:
-        """
         if self.using_tkinter:
             time.sleep(sleep_time)
             self.update()
 
 
 def demo(actions, nb_episodes_demo):
-    """
-    Just used for the demo when running this single script
-    No brain
-
-    :param actions:
-    :param nb_episodes_demo:
-    :return:
-    """
     for t in range(nb_episodes_demo):
         _, masked_actions_list = env.reset()
         print("New Episode")
