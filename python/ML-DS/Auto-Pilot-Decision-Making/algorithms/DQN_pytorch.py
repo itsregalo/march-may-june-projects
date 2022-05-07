@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import random
 from collections import namedtuple, deque
 
-from pytorch_model import QNetwork
+from algorithms.pytorch_model import QNetwork
 import matplotlib as mpl
 
 import torch

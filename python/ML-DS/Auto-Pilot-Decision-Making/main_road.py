@@ -1,33 +1,3 @@
-"""
-Reinforcement Learning example for the motion of an driving agent on a straight road.
--   The brain (called "RL") is chosen among the different implementations in RL_brain.py
--   The Environment in simple_road_env.py
-
-Discrete State Space
--   see simple_road_env.py
-
-Action Space:
--	“Maintain” current lane and speed,
--	“Accelerate” at rate = a1[m/s2], provided velocity does not exceed vmax[km/h],
--	“Decelerate” at rate = −a1[m/s2], provided velocity is above vmin[km/h],
--	“Hard Accelerate” at rate = a2[m/s2], provided velocity does not exceed vmax[km/h],
--	“Hard Decelerate” at rate = −a2[m/s2], provided velocity is above vmin[km/h],
-(acceleration are given for a constant amount this time step)
-
-To Do:
--	Add actions
--       -- Change lane to the left, provided there is a lane on the left,
--   	-- Change lane to the right, provided there is a lane on the right
-- Trying to reduce chance of random action as we train the model
-- define a test + baseline
-    - simulator?
-    - I could not find any reference KPI to compare with
-    - See the agent running after it solved the env
-
-Bug:
--   None
-"""
-
 import os
 import sys
 import matplotlib.pyplot as plt
@@ -48,7 +18,6 @@ from collections import deque
 import math
 from utils.logger import Logger
 
-# seed = np.random.seed(0)
 plt.rcParams['figure.figsize'] = [20, 10]
 np.set_printoptions(formatter={'float': lambda x: "{0:0.2f}".format(x)})
 
@@ -56,29 +25,6 @@ np.set_printoptions(formatter={'float': lambda x: "{0:0.2f}".format(x)})
 def train_agent(using_tkinter, agent, method, gamma, learning_rate, eps_start, eps_end, eps_decay,
                 window_success, threshold_success, returns_list, steps_counter_list, info_training,
                 max_nb_episodes, max_nb_steps, sleep_time, folder_name=""):
-    """
-
-    :param using_tkinter: [bool] to display the environment, or not
-    :param agent: [brain object]
-    :param method: [string] value-based learning method - either sarsa or q-learning
-    :param gamma: [float between 0 and 1] discount factor
-    If gamma is closer to one, the agent will consider future rewards with greater weight,
-    willing to delay the reward.
-    :param learning_rate: [float between 0 and 1] - Non-constant learning rate must be used?
-    :param eps_start: [float]
-    :param eps_end: [float]
-    :param eps_decay: [float]
-    :param window_success: [int]
-    :param threshold_success: [float] to solve the env, = average score over the last x scores, where x = window_success
-    :param returns_list: [list of float]
-    :param steps_counter_list: [list of int]
-    :param info_training: [dict]
-    :param max_nb_episodes: [int] limit of training episodes
-    :param max_nb_steps: [int] maximum number of timesteps per episode
-    :param sleep_time: [int] sleep_time between two steps [ms]
-    :param folder_name: [string] to distinguish between runs during hyper-parameter tuning
-    :return: [list] returns_list - to be displayed
-    """
     returns_window = deque(maxlen=window_success)  # last x scores, where x = window_success
 
     # probability of random choice for epsilon-greedy action selection
@@ -145,8 +91,6 @@ def train_agent(using_tkinter, agent, method, gamma, learning_rate, eps_start, e
                     break
 
             # update the action-value function estimate using the episode
-            # print("episode = {}".format(episode))
-            # agent.compare_reference_value()
             agent.learn(episode, gamma, learning_rate)
 
         else:  # TD
@@ -206,7 +150,6 @@ def train_agent(using_tkinter, agent, method, gamma, learning_rate, eps_start, e
 
                         # if the number of steps is larger than a threshold, start learn ()
                         if (step_id > 5) and (step_id % 5 == 0):  # for 1 to T
-                            # print('learning')
                             # pick up some transitions from the memory and learn from these samples
                             agent.learn()
 
@@ -296,18 +239,6 @@ def train_agent(using_tkinter, agent, method, gamma, learning_rate, eps_start, e
 
 def display_results(agent, method_used_to_plot, returns_to_plot, smoothing_window, threshold_success,
                     steps_counter_list_to_plot, display_flag=True, folder_name=""):
-    """
-    Use to SAVE + plot (optional)
-    :param agent:
-    :param method_used_to_plot:
-    :param returns_to_plot:
-    :param smoothing_window:
-    :param threshold_success:
-    :param steps_counter_list_to_plot:
-    :param display_flag:
-    :param folder_name:
-    :return:
-    """
     # where to save the plots
     parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     folder = os.path.join(parent_dir, "results/simple_road/" + folder_name)
@@ -356,17 +287,6 @@ def display_results(agent, method_used_to_plot, returns_to_plot, smoothing_windo
 
 def test_agent(using_tkinter_test, agent, returns_list, nb_episodes=1, max_nb_steps=20, sleep_time=0.001,
                weight_file_name="q_table.pkl"):
-    """
-    load weights and show one run
-    :param using_tkinter_test: [bool]
-    :param agent: [brain object]
-    :param returns_list: [float list] - argument passed by reference
-    :param nb_episodes: [int]
-    :param max_nb_steps: [int]
-    :param sleep_time: [float]
-    :param weight_file_name: [string]
-    :return: -
-    """
     grand_parent_dir_test = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     weight_file = os.path.abspath(grand_parent_dir_test + "/results/simple_road/" + weight_file_name)
     if agent.load_q_table(weight_file):

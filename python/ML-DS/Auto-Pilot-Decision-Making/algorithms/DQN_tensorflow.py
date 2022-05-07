@@ -8,7 +8,7 @@ if "../" not in sys.path:
     sys.path.append("../")
 
 np.random.seed(1)
-tf.set_random_seed(1)
+tf.random.set_seed(1)
 
 # Create a global step variable
 global_step = tf.Variable(0, name='global_step', trainable=False)
