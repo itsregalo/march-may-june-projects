@@ -6,12 +6,12 @@ import pandas as pd
 import time  # to time the learning process
 import json  # to get the configuration of the environment
 from env.roadEnv import Road
-from algorithms.algorithm import MC
-from algorithms.algorithm import QLearningTable
+# from algorithms.algorithm import MC
+# from algorithms.algorithm import QLearningTable
 from algorithms.algorithm import SarsaTable
-from algorithms.algorithm import ExpectedSarsa
-from algorithms.algorithm import SarsaLambdaTable
-from algorithms.algorithm import DP
+# from algorithms.algorithm import ExpectedSarsa
+# from algorithms.algorithm import SarsaLambdaTable
+# from algorithms.algorithm import DP
 from algorithms.DQN_tensorflow import DeepQNetwork
 from algorithms.DQN_pytorch import Agent
 from collections import deque
