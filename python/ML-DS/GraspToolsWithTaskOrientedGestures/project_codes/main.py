@@ -8,12 +8,11 @@ import pybullet_data
 from datetime import datetime
 import numpngw
 import tensorflow as tf
-tf.disable_v2_behavior()
 import matplotlib
 import matplotlib.pyplot as plt
 from PIL import Image
 from object_detection.utils import ops as utils_ops
-from utils import label_map_util
+from object_detection.utils import label_map_util
 from utils import visualization_utils as vsi_util
 
 
